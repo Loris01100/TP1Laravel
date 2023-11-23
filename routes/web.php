@@ -15,13 +15,34 @@ use App\Models\Tshirt;
 |
 */
 
+//index
 Route::get('/tshirts', function() {
 
     $tshirts = Tshirt::all();
     return view('index', compact('tshirts') );
 });
 
+//create
+Route::get('/tshirts/create', function() {
 
+    return view('create');
+});
+
+//store
+Route::post('/tshirts', function() {
+    $tshirt = new Tshirt;
+    $tshirt->name = request('name');
+    $tshirt->price = request('price');
+    $tshirt->places = request('places');
+    $tshirt->size = request('size');
+    $tshirt->brand = request('brand');
+    $tshirt->color = request('color');
+    $tshirt->fabrication = request('fabrication');
+    $tshirt->save();
+    return redirect('/tshirts/'. $tshirt->id);
+});
+
+//show
 Route::get('/tshirts/{id}', function($id) {
 
     $tshirts = Tshirt::find($id);

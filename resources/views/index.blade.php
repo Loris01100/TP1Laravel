@@ -1,3 +1,10 @@
+@extends('layout')
+
+@section('title', 'All the tshirts')
+
+@section('main')
+
+
 <h1>All the tshirts</h1>
 
 <table>
@@ -28,3 +35,4 @@
  @endforeach
 
 </table>
+@endsection
