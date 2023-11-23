@@ -18,4 +18,10 @@
     <p>Aucun enregistrement trouvé pour cet ID.</p>
 @endif
 
+<form method ="post" action= "/tshirts/{{ $tshirts->id }}">
+    @csrf
+    @method("delete")
+    <button class="bg-blue-500 px-8 py-2">Supprimer</button>
+</form>
+
 @endsection
