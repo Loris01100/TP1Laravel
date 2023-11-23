@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Tshirt;
+use App\Http\Controllers\TshirtController;
 
 
 /*
@@ -16,72 +16,20 @@ use App\Models\Tshirt;
 */
 
 //index
-Route::get('/tshirts', function() {
+Route::get('/tshirts', [TshirtController::class, 'index']);
 
-    $tshirts = Tshirt::all();
-    return view('index', compact('tshirts') );
-});
+Route::get('/tshirts/{id}', [TshirtController::class, 'show']);
 
-//create
-Route::get('/tshirts/create', function() {
 
-    return view('create');
-});
+Route::post('/tshirts/create', [TshirtController::class, 'create' ]);
 
-//store
-Route::post('/tshirts', function() {
-    $tshirt = new Tshirt;
-    $tshirt->name = request('name');
-    $tshirt->price = request('price');
-    $tshirt->places = request('places');
-    $tshirt->size = request('size');
-    $tshirt->brand = request('brand');
-    $tshirt->color = request('color');
-    $tshirt->fabrication = request('fabrication');
-    $tshirt->save();
-    return redirect('/tshirts/'. $tshirt->id);
-});
 
-//show
-Route::get('/tshirts/{id}', function($id) {
+Route::get('/tshirts',  [TshirtController::class, 'store']);
 
-    $tshirts = Tshirt::find($id);
-    return view('show', compact('tshirts') );
-});
+Route::get('/tshirts/{id}/edit',  [TshirtController::class, 'edit']);
 
-//edit 
-//Chercher une ressource spécifique
-//Renvoyer une vue présentant un formulaire dédition
-Route::get('/tshirts/{id}/edit', function($id) {
 
-    $tshirts = Tshirt::find($id);
-    return view('edit', compact('tshirts'));
-});
+Route::patch('/tshirts/{id}',  [TshirtController::class, 'update']);
 
-//update 
-//Traiter les données du formulaire et mettre à jour les ressources 
 
-Route::patch('/tshirts/{id}', function($id) {
-    $tshirt = Tshirt::find($id);
-			$tshirt->name = request('name');
-			$tshirt->price = request('price');
-			$tshirt->places = request('places');
-            $tshirt->size = request('size');
-			$tshirt->brand = request('brand');
-			$tshirt->color = request('color');
-            $tshirt->fabrication = request('fabrication');
-			$tshirt->save();
-            return redirect('/tshirts/'. $tshirt->id);
-
-});
-
-//destroy 
-//Supprimer la ressource de la BDD
-
-Route::delete('/tshirts/{id}', function($id) {
-
-    $tshirt = Tshirt::find($id);
-    $tshirt->delete();
-    return redirect('/tshirts');
-
-});
+Route::delete('/tshirts/{id}',  [TshirtController::class, 'destroy']);
